@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Twitter</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Twitter.styles.css" asp-append-version="true" />
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <partial name="_LeftSideBar" />
+            </div>
+            <main role="main" class="main-content col-md-5">
+                @RenderBody()
+            </main>
+            <div class="col-md-4">
+                <partial name="_SearchSide" />
+
+            </div>
+        </div>
+
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#head-search-input').on('input',
+                function() {
+                    if ($(this).val().length > 0) {
+                        $('#head-search-result').load('@Url.Action("Search", "Home")?term=' + $(this).val());
+                        $('#head-search-result').css("display", "block");
+                    } else {
+                        $('#head-search-result').css("display", "none");
+                    }
+            
+
+                });
+        });
+
+        function AddLike(ths) {
+            if ($(ths).children("i").hasClass('icon-heart-empty')) {
+                $(ths).children("i").toggleClass('icon-heart-empty').toggleClass('icon-heart');
+                $(ths).children("span").html(Number($(ths).children("span").html()) + 1);
+
+                $.ajax(
+                    {
+                        url: "@Url.Action("Like", "Tweet")",
+                        data: { tweetId: $(ths).data('id') },
+                        success: function() {
+                        }
+                    });
+
+            } else {
+                $(ths).children("i").toggleClass('icon-heart-empty').toggleClass('icon-heart');
+                $(ths).children("span").html(Number($(ths).children("span").html()) - 1);
+                $.ajax(
+                    {
+                        url: "@Url.Action("UnLike", "Tweet")",
+                         data: { tweetId: $(ths).data('id') },
+                         success: function() {
+                         }
+                     });
+             }
+        }
+
+             function AddComment(ths) {
+                 $('#AddCommentViewModel_TweetId').val($(ths).data('id'));
+                 $('#AddCommentModal').modal('show');
+             }
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

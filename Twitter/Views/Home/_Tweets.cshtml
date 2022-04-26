@@ -1,0 +1,110 @@
+﻿@model List<Twitter.ViewModels.TweetViewModel>
+@if (Model.Any())
+{
+    @foreach (var item in Model)
+    {
+        <div class="row tweet-card">
+            <div class="col-md-1">
+                @if (item.ApplicationUser.Avatar is not null)
+                {
+                    <img src="~/uploads/@item.ApplicationUser.Avatar" width="42" height="42" alt="Avatar" class="user-round-image">
+
+                }
+                else
+                {
+                    <img src="~/image/avatar.png" width="42" height="42" alt="Avatar" class="user-round-image">
+                }
+            </div>
+            <div class="col-md-11">
+                <p class="tweets-user-name">
+                    <a asp-action="Profile" asp-route-userId="@item.ApplicationUserId" asp-controller="User" style="font-weight:bold">@(String.Format("{0} {1}", item.ApplicationUser.FirstName, item.ApplicationUser.LastName))</a> <a asp-action="Profile" asp-route-userId="@item.ApplicationUserId" asp-controller="User" style="color:gray">@(String.Format("@{0}", item.ApplicationUser.UserName))</a>
+                  
+                    @if (item.ParentReTweet is not null)
+                    {
+                    <p>ReTweet from @(String.Format("@{0}", item.ParentReTweet.ApplicationUser.UserName)) </p>
+                    }
+                </p>
+
+                <p class="tweets-time">@item.DateTime.ToString("yyyy-MM-dd")</p>
+                <p class="tweets-text">
+
+                    @if (item.ParentReTweet is not null)
+                    {
+                        <a asp-action="Index" asp-controller="Tweet" asp-route-tweetId="@item.ParentReTweetId" style="text-decoration: none; color: black">
+                            @item.ParentReTweet.Text
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-action="Index" asp-controller="Tweet" asp-route-tweetId="@item.Id" style="text-decoration: none; color: black">
+
+                            @item.Text
+                        </a>
+
+                    }
+                    <div class="row">
+                        @if (item.Image1 is not null)
+                        {
+                            <div class="col-md-6">
+                                <img src="~/uploads/@item.Image1" width="128" height="128" />
+                            </div>
+                        }
+                        @if (item.Image2 is not null)
+                        {
+                            <div class="col-md-6">
+                                <img src="~/uploads/@item.Image2" width="128" height="128" />
+                            </div>
+                        }
+                        @if (item.Image3 is not null)
+                        {
+                            <div class="col-md-6">
+                                <img src="~/uploads/@item.Image3" width="128" height="128" />
+                            </div>
+                        }
+                        @if (item.Image4 is not null)
+                        {
+                            <div class="col-md-6">
+                                <img src="~/uploads/@item.Image4" width="128" height="128" />
+                            </div>
+                        }
+                    </div>
+
+
+                </p>
+                <div class="row text-center">
+                    <div class="col-md-4 text-center hand" id="add-comment" data-id="@item.Id" onclick="AddComment($(this))">
+                        <span>  @item.Comments.Count</span>
+                        <i class="fa icon-comment"></i>
+                    </div>
+                    <div class="col-md-4 text-center hand" id="add-like" onclick="AddLike($(this))" data-id="@item.Id">
+                        <span>@item.TweetLikes.Count</span>
+                        @if (item.CurrentUserLiked)
+                        {
+                            <i class="fa icon-heart"></i>
+                        }
+                        else
+                        {
+                            <i class="fa icon-heart-empty"></i>
+                        }
+
+                    </div>
+                    @if (item.ParentReTweetId is null)
+                    {
+                        <a class="col-md-4 text-center hand" asp-action="ReTweet" asp-controller="Tweet" asp-route-tweetId="@item.Id" style="text-decoration: none;color: black" id="re-tweet" data-id="@item.Id" onclick="ReTweet($(this))">
+                            <i class="fa icon-undo"></i>
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+
+    }
+
+}
+else
+{
+    <div class="row">
+        <h2>No more Tweets.</h2>
+    </div>
+}
+

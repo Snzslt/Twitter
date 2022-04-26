@@ -1,0 +1,59 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+
+<form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+    <div class="row my-5">
+        <div class="col-md-4"></div>
+
+        <div class="col-md-4 bg-light p-2 pt-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-outline mb-4">
+                <label asp-for="Input.UserName" class="form-label"></label>
+                <input asp-for="Input.UserName" class="form-control" />
+                <span asp-validation-for="Input.UserName"></span>
+            </div>
+            <div class="form-outline mb-4">
+                <label asp-for="Input.FirstName" class="form-label"></label>
+                <input asp-for="Input.FirstName" class="form-control" />
+                <span asp-validation-for="Input.FirstName"></span>
+            </div>
+            <div class="form-outline mb-4">
+                <label asp-for="Input.LastName" class="form-label"></label>
+                <input asp-for="Input.LastName" class="form-control" />
+                <span asp-validation-for="Input.LastName"></span>
+            </div>
+            <div class="form-outline mb-4">
+                <label asp-for="Input.Email" class="form-label"></label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email"></span>
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" asp-for="Input.Password"></label>
+                <input type="password" asp-for="Input.Password" class="form-control" />
+                <span asp-validation-for="Input.Password"></span>
+            </div>
+
+            <div class="form-outline mb-4">
+                <label class="form-label" asp-for="Input.ConfirmPassword"></label>
+                <input type="password" asp-for="Input.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="Input.ConfirmPassword"></span>
+            </div>
+
+
+            <button id="login-submit" type="submit" class="btn btn-primary btn-block mb-4">Log in</button>
+
+
+        </div>
+
+        <div class="col-md-4"></div>
+    </div>
+</form>
+
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

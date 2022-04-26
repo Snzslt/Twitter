@@ -1,0 +1,141 @@
+﻿@using Twitter.Common
+@model Twitter.ViewModels.TweetViewModel
+<div class="row mt-2">
+    <div class="text-left">
+        <h6>Tweet</h6>
+    </div>
+</div>
+
+
+<div class="row mt-2 tweets-section" id="tweets-section-list">
+    <div class="row tweet-card">
+        <div class="col-md-1">
+            @if (Model.ApplicationUser.Avatar is not null)
+            {
+                <img src="~/uploads/@Model.ApplicationUser.Avatar" width="42" height="42" alt="Avatar" class="user-round-image">
+
+            }
+            else
+            {
+                <img src="~/image/avatar.png" width="42" height="42" alt="Avatar" class="user-round-image">
+            }
+        </div>
+        <div class="col-md-11">
+            <p class="tweets-user-name">
+                <a asp-action="Profile" asp-route-userId="@Model.ApplicationUserId" asp-controller="User" style="font-weight:bold">@(String.Format("{0} {1}", Model.ApplicationUser.FirstName, Model.ApplicationUser.LastName))</a> <a asp-action="Profile" asp-route-userId="@Model.ApplicationUserId" asp-controller="User" style="color:gray">@(String.Format("@{0}", Model.ApplicationUser.UserName))</a>
+
+                @if (Model.ParentReTweet is not null)
+                {
+                <p>ReTweet from @(String.Format("@{0}", Model.ParentReTweet.ApplicationUser.UserName)) </p>
+                }
+            </p>
+            <p class="tweets-time">@Model.DateTime.ToString("yyyy-MM-dd")</p>
+            <p class="tweets-text">
+                @if (Model.ParentReTweet is not null)
+                {
+                    <a asp-action="Index" asp-controller="Tweet" asp-route-tweetId="@Model.ParentReTweetId" style="text-decoration: none; color: black">
+                        @Model.ParentReTweet.Text
+                    </a>
+                }
+                else
+                {
+                    <a asp-action="Index" asp-controller="Tweet" asp-route-tweetId="@Model.Id" style="text-decoration: none; color: black">
+
+                        @Model.Text
+                    </a>
+
+                }
+                <div class="row">
+                    @if (Model.Image1 is not null)
+                    {
+                        <div class="col-md-6">
+                            <img src="~/uploads/@Model.Image1" width="128" height="128" />
+                        </div>
+                    }
+                    @if (Model.Image2 is not null)
+                    {
+                        <div class="col-md-6">
+                            <img src="~/uploads/@Model.Image2" width="128" height="128" />
+                        </div>
+                    }
+                    @if (Model.Image3 is not null)
+                    {
+                        <div class="col-md-6">
+                            <img src="~/uploads/@Model.Image3" width="128" height="128" />
+                        </div>
+                    }
+                    @if (Model.Image4 is not null)
+                    {
+                        <div class="col-md-6">
+                            <img src="~/uploads/@Model.Image4" width="128" height="128" />
+                        </div>
+                    }
+                </div>
+            </p>
+            <div class="row text-center">
+                <div class="col-md-6 text-center">
+                    @Model.Comments.Count
+                    <i class="fa icon-comment"></i>
+                </div>
+                <div class="col-md-6 text-center hand" id="add-like" onclick="AddLike($(this))" data-id="@Model.Id">
+                    <span>@Model.TweetLikes.Count</span>
+                    @if (Model.CurrentUserLiked)
+                    {
+                        <i class="fa icon-heart"></i>
+                    }
+                    else
+                    {
+                        <i class="fa icon-heart-empty"></i>
+                    }
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row mt-2 tweets-section" id="tweets-section-list">
+    @foreach (var item in Model.Comments)
+    {
+        <div class="row tweet-card">
+            <div class="col-md-1">
+                @if (item.ApplicationUser.Avatar is not null)
+                {
+                    <img src="~/uploads/@item.ApplicationUser.Avatar" width="42" height="42" alt="Avatar" class="user-round-image">
+
+                }
+                else
+                {
+                    <img src="~/image/avatar.png" width="42" height="42" alt="Avatar" class="user-round-image">
+                }
+            </div>
+            <div class="col-md-11">
+                <p class="tweets-user-name">@item.ApplicationUser.FirstName @item.ApplicationUser.LastName  </p>
+                <p class="tweets-time">@item.DateTime.ToString("yyyy-MM-dd")</p>
+                <p class="tweets-text">
+                    @item.Text
+                    <div class="row">
+                        @if (item.Image is not null)
+                        {
+                            <div class="col-md-6">
+                                <img src="~/uploads/@item.Image" width="128" height="128" />
+                            </div>
+                        }
+                    </div>
+                </p>
+                @if (item.ApplicationUserId == User.Identity.GetUserId())
+                {
+                    <div class="col-md-12 text-danger text-center">
+                        <a asp-action="DeleteComment" asp-controller="Tweet" asp-route-commentId="@item.Id" onclick="return confirm('Are you Sure Delete This tweet?')">
+                            <i class="fa icon-remove"></i>
+                        </a>
+                    </div>
+                }
+
+            </div>
+        </div>
+
+    }
+</div>

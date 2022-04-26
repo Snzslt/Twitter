@@ -1,0 +1,27 @@
+﻿@using Twitter.Common
+<img src="~/image/logo.png" class="main-logo" height="32" />
+<ul class="nav-menu">
+    <li class="active">
+        <a asp-action="Index" asp-controller="Home">
+            <i class="fa icon-home"></i>
+            Home
+        </a>
+    </li>
+    <li>
+        <a asp-action="Profile" asp-route-userId="@User.Identity.GetUserId()" asp-controller="User">
+            <i class="fa icon-user"></i>
+            Profile
+        </a>
+    </li>
+
+    <li>
+        @User.Identity.GetUserName()
+
+        <form id="sign-out-form" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <a onclick="document.getElementById('sign-out-form').submit();" class="hand">
+                <i class="fa icon-signout"></i>
+                sign out
+            </a>
+        </form>
+    </li>
+</ul>

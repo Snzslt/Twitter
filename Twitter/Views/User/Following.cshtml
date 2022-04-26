@@ -1,0 +1,38 @@
+﻿@model List<Twitter.ViewModels.SearchResult>
+@{
+    ViewData["Title"] = "Following";
+}
+@if (Model.Any())
+{
+    @foreach (var item in Model)
+    {
+        <div class="row p-2">
+            <div class="col-md-2">
+                @if (item.Avatar is null)
+                {
+                    <img src="~/image/avatar.png" width="42" height="42" alt="Avatar" class="user-round-image">
+
+                }
+                else
+                {
+                    <img src="~/uploads/@item.Avatar" width="42" height="42" alt="Avatar" class="user-round-image">
+
+                }
+            </div>
+            <div class="col-md-6">
+                <a asp-action="Profile" asp-controller="User" asp-route-userId="@item.UserId">
+                    <b>@item.DisplayName</b>
+                    <div style="font-size: 12px;">    @item.UserName</div>
+                </a>
+            </div>
+        </div>
+    }
+
+}
+else
+{
+    <div class="col-md-2">
+        User Not Found!
+    </div>
+
+}

@@ -1,0 +1,103 @@
+﻿@using System.Net.Mime
+@model Twitter.ViewModels.HomePageViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row mt-2">
+    <div class="text-left">
+        <h6>Home</h6>
+    </div>
+</div>
+<form asp-action="AddTweet" enctype="multipart/form-data">
+    <div class="row mt-2 add-twitte">
+        <div class="col-md-1">
+            @if (Model.CurrentUser.Avatar is not null)
+            {
+                <img src="~/uploads/@Model.CurrentUser.Avatar" width="42" height="42" alt="Avatar" class="user-round-image">
+            }
+            else
+            {
+                <img src="~/image/avatar.png" width="42" height="42" alt="Avatar" class="user-round-image">
+            }
+        </div>
+        <div class="col-md-11">
+            <textarea asp-for="AddTweetViewModel.Text" placeholder="What's Happening?">
+
+        </textarea>
+            <hr />
+            <div class="row pb-1">
+                <div class="col-md-9  pull-left">
+                    <input style="display: none" asp-for="AddTweetViewModel.Images" multiple accept="image/apng, image/avif, image/gif, image/jpeg, image/png, image/svg+xml, image/webp" />
+                    <span onclick="document.getElementById('AddTweetViewModel_Images').click();"><i class="fa icon-picture"></i></span>
+                </div>
+                <div class="col-md-1  pull-right">
+                    <button type="submit" class="twitter-btn">Tweet</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</form>
+
+<div class="row mt-2 tweets-section" id="tweets-section-list">
+</div>
+
+
+<div class="modal fade" id="AddCommentModal" tabindex="-1" aria-labelledby="AddCommentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddCommentModalLabel">
+                    Replying to
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="AddComment" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="AddCommentViewModel.TweetId" />
+                    <div class="row mt-2 add-twitte">
+                        <div class="col-md-1">
+                            @if (Model.CurrentUser.Avatar is not null)
+                            {
+                                <img src="~/uploads/@Model.CurrentUser.Avatar" width="42" height="42" alt="Avatar" class="user-round-image">
+                            }
+                            else
+                            {
+                                <img src="~/image/avatar.png" width="42" height="42" alt="Avatar" class="user-round-image">
+                            }
+                        </div>
+                        <div class="col-md-11">
+                            <textarea asp-for="AddCommentViewModel.Text" placeholder="What's Happening?">
+
+        </textarea>
+                            <hr />
+                            <div class="row pb-1">
+                                <div class="col-md-9  pull-left">
+                                    <input style="display: none" asp-for="AddCommentViewModel.Image" accept="image/apng, image/avif, image/gif, image/jpeg, image/png, image/svg+xml, image/webp" />
+                                    <span onclick="document.getElementById('AddCommentViewModel_Image').click();"><i class="fa icon-picture"></i></span>
+                                </div>
+                                <div class="col-md-1  pull-right">
+                                    <button type="submit" class="twitter-btn">add</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#tweets-section-list').load('@Url.Action("GetTweets")');
+
+    });
+
+</script>
+}

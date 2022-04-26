@@ -1,0 +1,155 @@
+html {
+    font-size: 21px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 21px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+.main-logo {
+    margin-left: 30px;
+    margin-top: 10px;
+}
+
+.nav-menu {
+    list-style: none;
+    margin-right: 0px;
+    margin-top: 10px;
+    padding-left: 32px !important;
+}
+
+    .nav-menu a {
+        text-decoration: none;
+        color: black !important;
+    }
+
+    .nav-menu i {
+        margin-right: 10px;
+    }
+
+    .nav-menu li {
+        margin-bottom: 20px;
+    }
+
+        .nav-menu li.active {
+            font-weight: 700;
+        }
+
+.twitter-btn {
+    background-color: rgb(29, 155, 240);
+    border-radius: 45px;
+    border: none;
+    font-size: 15px;
+    padding: 3px 16px 3px 14px;
+    color: white;
+}
+
+.head-search-input {
+    margin-top: 5px;
+    padding: 9px;
+    padding-left: 51px;
+    background-color: rgb(239, 243, 244);
+    border-radius: 79px;
+    border-color: rgba(0, 0, 0, 0);
+    border-width: 1px;
+    border-style: solid;
+}
+
+
+
+.head-search {
+    position: relative;
+}
+
+    .head-search i {
+        position: absolute;
+        left: 18px;
+        top: 20px;
+        color: gray;
+    }
+
+.main-content {
+    border: 1px #0000001c solid;
+    border-top: none;
+    border-bottom: none;
+}
+
+.add-twitte {
+    border-bottom: 1px #0000001c solid;
+}
+
+    .add-twitte textarea {
+        width: 100%;
+        padding: 5px;
+        border: 1px #0000001a solid;
+        border-radius: 10px;
+    }
+
+    .add-twitte hr {
+        margin: 3px 0 !important;
+    }
+
+.user-round-image {
+    border-radius: 50%;
+}
+
+.tweets-section {
+}
+
+.tweets-text {
+    font-size: 16px;
+    padding: 10px;
+    padding-top: 1px;
+}
+
+.tweets-time {
+    font-size: 16px;
+    padding: 5px;
+    color: #000000c2;
+    margin-bottom: 0;
+}
+
+.tweets-user-name {
+    font-size: 16px;
+    padding: 5px;
+    color: #000000c2;
+    margin-bottom: 0;
+}
+
+.tweet-card {
+    border-bottom: 1px #0000001c solid;
+}
+
+    .tweet-card img {
+        padding-top: 2px;
+    }
+
+
+
+.serach-sugeest {
+    z-index: 1000;
+    width: 72%;
+    max-height: 200px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.hand {
+    cursor: pointer !important;
+}
+
+.tweets-user-name > a {
+    text-decoration: none;
+    color: black;
+}
